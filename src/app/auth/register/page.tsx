@@ -1,0 +1,99 @@
+'use client';
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { registerSchema } from '@/lib/zod-schemas';
+import { useUserStore } from '@/stores/user.store';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { User, Mail, Lock, ArrowLeft } from 'lucide-react';
+import * as z from 'zod';
+
+export default function RegisterPage() {
+  const router = useRouter();
+  const { setUser } = useUserStore();
+  const [loading, setLoading] = useState(false);
+
+  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    setLoading(true);
+    await new Promise(r => setTimeout(r, 1000));
+    
+    // Auto-login after registration (mocked)
+    setUser({ 
+      id: `user-${Date.now()}`, 
+      name: data.name, 
+      email: data.email, 
+      role: 'CUSTOMER', 
+      loyaltyPoints: 50, // Welcome bonus
+      createdAt: new Date().toISOString() 
+    });
+    
+    router.push('/account');
+    setLoading(false);
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-bg">
+      <div className="max-w-md w-full space-y-8 bg-card-bg p-8 rounded-2xl shadow-warm border border-border">
+        <div>
+          <Link href="/" className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-primary-600 mb-6 transition-colors">
+            <ArrowLeft size={16} /> Back to home
+          </Link>
+          <div className="w-12 h-12 rounded-full bg-primary-600 flex items-center justify-center mx-auto mb-4">
+            <span className="text-white text-2xl leading-none">🥐</span>
+          </div>
+          <h2 className="text-center font-display text-3xl font-bold text-text-primary">Create an account</h2>
+          <p className="mt-2 text-center text-sm text-text-secondary">
+            Join today and get 50 loyalty points instantly!
+          </p>
+        </div>
+        
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          <div className="space-y-4">
+            <Input 
+              {...register('name')}
+              label="Full Name"
+              type="text"
+              placeholder="John Doe"
+              error={errors.name?.message}
+              icon={<User size={18} />}
+            />
+            <Input 
+              {...register('email')}
+              label="Email address"
+              type="email"
+              placeholder="you@example.com"
+              error={errors.email?.message}
+              icon={<Mail size={18} />}
+            />
+            <Input 
+              {...register('password')}
+              label="Password"
+              type="password"
+              placeholder="••••••••"
+              error={errors.password?.message}
+              icon={<Lock size={18} />}
+            />
+          </div>
+
+          <Button fullWidth size="lg" type="submit" loading={loading}>
+            Create Account
+          </Button>
+        </form>
+
+        <p className="text-center text-sm text-text-secondary pt-4">
+          Already have an account?{' '}
+          <Link href="/auth/login" className="font-medium text-primary-600 hover:text-primary-500">
+            Sign in
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
