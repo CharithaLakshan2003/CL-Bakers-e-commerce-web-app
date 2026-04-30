@@ -26,14 +26,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!credentials?.email || !credentials?.password) return null;
         
         // Mock authorization for development without DB
-        if (credentials.email === 'admin@clbakers.com' && credentials.password === 'password') {
-          return { id: '1', name: 'Admin User', email: 'admin@clbakers.com', role: 'ADMIN' };
-        }
-        if (credentials.email === 'user@example.com' && credentials.password === 'password') {
-          return { id: '2', name: 'Regular User', email: 'user@example.com', role: 'CUSTOMER' };
-        }
+        // if (credentials.email === 'admin@clbakers.com' && credentials.password === 'password') {
+        //   return { id: '1', name: 'Admin User', email: 'admin@clbakers.com', role: 'ADMIN' };
+        // }
+        // if (credentials.email === 'user@example.com' && credentials.password === 'password') {
+        //   return { id: '2', name: 'Regular User', email: 'user@example.com', role: 'CUSTOMER' };
+        // }
 
-        /*
+        
         const user = await prisma.user.findUnique({ where: { email: credentials.email as string } });
         if (!user || !user.password) return null;
         
@@ -41,7 +41,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!isPasswordValid) return null;
         
         return user;
-        */
+        
         return null;
       },
     }),

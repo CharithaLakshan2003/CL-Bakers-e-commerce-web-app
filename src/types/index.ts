@@ -17,7 +17,7 @@ export interface User {
   phone?: string;
   birthday?: string;
   loyaltyPoints: number;
-  emailVerified?: boolean;
+  emailVerified?: string | Date;
   createdAt: string;
   image?: string;
 }

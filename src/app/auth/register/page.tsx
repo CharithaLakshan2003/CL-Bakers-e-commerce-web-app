@@ -11,10 +11,13 @@ import { Input } from '@/components/ui/Input';
 import { User, Mail, Lock, ArrowLeft } from 'lucide-react';
 import * as z from 'zod';
 
+import { registerUser } from '../actions';
+import { signIn } from 'next-auth/react';
+
 export default function RegisterPage() {
   const router = useRouter();
-  const { setUser } = useUserStore();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -22,20 +25,28 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1000));
+    setError('');
     
-    // Auto-login after registration (mocked)
-    setUser({ 
-      id: `user-${Date.now()}`, 
-      name: data.name, 
-      email: data.email, 
-      role: 'CUSTOMER', 
-      loyaltyPoints: 50, // Welcome bonus
-      createdAt: new Date().toISOString() 
-    });
+    const result = await registerUser(data);
     
-    router.push('/account');
-    setLoading(false);
+    if (result.success) {
+      // Log them in
+      const signInResult = await signIn('credentials', {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+      });
+
+      if (signInResult?.error) {
+        setError(signInResult.error);
+        setLoading(false);
+      } else {
+        router.push('/account');
+      }
+    } else {
+      setError(result.error || 'Failed to register');
+      setLoading(false);
+    }
   };
 
   return (
@@ -81,6 +92,8 @@ export default function RegisterPage() {
               icon={<Lock size={18} />}
             />
           </div>
+
+          {error && <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-200">{error}</div>}
 
           <Button fullWidth size="lg" type="submit" loading={loading}>
             Create Account

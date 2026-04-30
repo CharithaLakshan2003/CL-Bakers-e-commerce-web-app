@@ -11,9 +11,10 @@ import { Input } from '@/components/ui/Input';
 import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import * as z from 'zod';
 
+import { signIn } from 'next-auth/react';
+
 export default function LoginPage() {
   const router = useRouter();
-  const { setUser } = useUserStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -24,22 +25,19 @@ export default function LoginPage() {
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     setLoading(true);
     setError('');
-    // Mock login since we don't have DB
-    await new Promise(r => setTimeout(r, 1000));
     
-    if (data.email === 'admin@clbakers.com' && data.password === 'password') {
-      setUser({ id: '1', name: 'Admin User', email: 'admin@clbakers.com', role: 'ADMIN', loyaltyPoints: 120, createdAt: new Date().toISOString() });
-      router.push('/admin');
-    } else if (data.email === 'baker@clbakers.com' && data.password === 'password') {
-      setUser({ id: '2', name: 'Baker Joe', email: 'baker@clbakers.com', role: 'BAKER', loyaltyPoints: 0, createdAt: new Date().toISOString() });
-      router.push('/baker');
-    } else if (data.email === 'user@example.com' && data.password === 'password') {
-      setUser({ id: '3', name: 'Jane Doe', email: 'user@example.com', role: 'CUSTOMER', loyaltyPoints: 450, createdAt: new Date().toISOString() });
-      router.push('/account');
+    const result = await signIn('credentials', {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+    });
+
+    if (result?.error) {
+      setError('Invalid email or password.');
+      setLoading(false);
     } else {
-      setError('Invalid email or password. Try admin@clbakers.com / password');
+      router.push('/account'); // Wait, we should redirect to the intended URL or based on role, but NextAuth can handle redirection. For now we will redirect to /account.
     }
-    setLoading(false);
   };
 
   return (
@@ -110,7 +108,7 @@ export default function LoginPage() {
           </div>
           
           <div className="mt-6">
-            <Button fullWidth variant="outline" className="text-text-primary border-border">
+            <Button fullWidth variant="outline" className="text-text-primary border-border" onClick={() => signIn('google')} type="button">
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
