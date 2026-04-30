@@ -98,3 +98,12 @@ export function pointsToDollars(points: number): number {
 export function dollarsToPoints(amount: number): number {
   return Math.floor(amount);
 }
+
+/** Format timestamp or date string to readable time (e.g. 10:30 AM) */
+export function formatTime(dateVal: string | number | Date): string {
+  return new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  }).format(new Date(dateVal));
+}

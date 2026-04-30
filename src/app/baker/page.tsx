@@ -30,7 +30,7 @@ export default function BakerDashboard() {
       {/* Left Col: Aggregated Baking List */}
       <div className="bg-card-bg border border-border rounded-2xl p-6 h-fit sticky top-6">
         <h2 className="font-display text-xl font-bold text-text-primary mb-4 flex items-center gap-2">
-          📋 Master Production List
+          Master Production List
         </h2>
         <div className="space-y-2">
           {itemsToBake.map(item => (

@@ -6,6 +6,7 @@ import { mockProducts } from '@/lib/mock-data';
 import type { Product } from '@/types';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/Badge';
+import { Header } from '@/components/layout/Header';
 
 const categoryOptions = [
   { value: 'bread', label: 'Artisan Bread' },
@@ -66,126 +67,129 @@ export default function ShopPage() {
   const { ProductCard } = require('@/components/shop/ProductCard');
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 container-custom pt-28 pb-16">
-        <div className="flex gap-8">
-          {/* Sidebar – desktop */}
-          <aside className="hidden lg:block w-64 shrink-0">
-            <FilterPanel
-              categories={categories} toggleCategory={toggleCategory}
-              priceRange={priceRange} setPriceRange={setPriceRange}
-              dietary={dietary} toggleDietary={toggleDietary}
-              minRating={minRating} setMinRating={setMinRating}
-              inStockOnly={inStockOnly} setInStockOnly={setInStockOnly}
-              resetFilters={resetFilters} filterCount={filterCount}
-            />
-          </aside>
+    <>
+      <Header/>
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-1 container-custom pt-28 pb-16">
+          <div className="flex gap-8">
+            {/* Sidebar – desktop */}
+            <aside className="hidden lg:block w-64 shrink-0">
+              <FilterPanel
+                categories={categories} toggleCategory={toggleCategory}
+                priceRange={priceRange} setPriceRange={setPriceRange}
+                dietary={dietary} toggleDietary={toggleDietary}
+                minRating={minRating} setMinRating={setMinRating}
+                inStockOnly={inStockOnly} setInStockOnly={setInStockOnly}
+                resetFilters={resetFilters} filterCount={filterCount}
+              />
+            </aside>
 
-          {/* Main */}
-          <main className="flex-1 min-w-0">
-            {/* Sort bar */}
-            <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setSidebarOpen(true)}
-                  className="lg:hidden flex items-center gap-2 px-4 py-2 border border-border rounded-full text-sm text-text-secondary hover:border-primary-600 hover:text-primary-600 transition-colors cursor-pointer"
-                >
-                  <SlidersHorizontal size={15} />
-                  Filters
-                  {filterCount > 0 && (
-                    <span className="w-5 h-5 rounded-full bg-primary-600 text-white text-xs flex items-center justify-center">{filterCount}</span>
-                  )}
-                </button>
-                <p className="text-sm text-text-muted">{filtered.length} products</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <select
-                  value={sortBy}
-                  onChange={e => setSortBy(e.target.value as never)}
-                  className="px-3 py-2 border border-border rounded-lg text-sm bg-input-bg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-600"
-                >
-                  {sortOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                </select>
-                <div className="flex border border-border rounded-lg overflow-hidden">
-                  {[{ icon: LayoutGrid, mode: 'grid' }, { icon: List, mode: 'list' }].map(({ icon: Icon, mode }) => (
-                    <button
-                      key={mode}
-                      onClick={() => setViewMode(mode as 'grid' | 'list')}
-                      className={cn(
-                        'w-9 h-9 flex items-center justify-center transition-colors cursor-pointer',
-                        viewMode === mode ? 'bg-primary-600 text-white' : 'text-text-muted hover:bg-primary-50 dark:hover:bg-primary-900/30'
-                      )}
-                    >
-                      <Icon size={15} />
-                    </button>
-                  ))}
+            {/* Main */}
+            <main className="flex-1 min-w-0">
+              {/* Sort bar */}
+              <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setSidebarOpen(true)}
+                    className="lg:hidden flex items-center gap-2 px-4 py-2 border border-border rounded-full text-sm text-text-secondary hover:border-primary-600 hover:text-primary-600 transition-colors cursor-pointer"
+                  >
+                    <SlidersHorizontal size={15} />
+                    Filters
+                    {filterCount > 0 && (
+                      <span className="w-5 h-5 rounded-full bg-primary-600 text-white text-xs flex items-center justify-center">{filterCount}</span>
+                    )}
+                  </button>
+                  <p className="text-sm text-text-muted">{filtered.length} products</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <select
+                    value={sortBy}
+                    onChange={e => setSortBy(e.target.value as never)}
+                    className="px-3 py-2 border border-border rounded-lg text-sm bg-input-bg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-600"
+                  >
+                    {sortOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                  <div className="flex border border-border rounded-lg overflow-hidden">
+                    {[{ icon: LayoutGrid, mode: 'grid' }, { icon: List, mode: 'list' }].map(({ icon: Icon, mode }) => (
+                      <button
+                        key={mode}
+                        onClick={() => setViewMode(mode as 'grid' | 'list')}
+                        className={cn(
+                          'w-9 h-9 flex items-center justify-center transition-colors cursor-pointer',
+                          viewMode === mode ? 'bg-primary-600 text-white' : 'text-text-muted hover:bg-primary-50 dark:hover:bg-primary-900/30'
+                        )}
+                      >
+                        <Icon size={15} />
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Active filters chips */}
-            {filterCount > 0 && (
-              <div className="flex flex-wrap gap-2 mb-5">
-                {categories.map(c => (
-                  <button key={c} onClick={() => toggleCategory(c as never)}
-                    className="flex items-center gap-1 px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-xs cursor-pointer hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors">
-                    {c} <X size={10} />
+              {/* Active filters chips */}
+              {filterCount > 0 && (
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {categories.map(c => (
+                    <button key={c} onClick={() => toggleCategory(c as never)}
+                      className="flex items-center gap-1 px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-xs cursor-pointer hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors">
+                      {c} <X size={10} />
+                    </button>
+                  ))}
+                  <button onClick={resetFilters}
+                    className="flex items-center gap-1 px-3 py-1 text-xs text-red-600 border border-red-200 rounded-full hover:bg-red-50 cursor-pointer transition-colors">
+                    Clear all
                   </button>
-                ))}
-                <button onClick={resetFilters}
-                  className="flex items-center gap-1 px-3 py-1 text-xs text-red-600 border border-red-200 rounded-full hover:bg-red-50 cursor-pointer transition-colors">
-                  Clear all
-                </button>
-              </div>
-            )}
+                </div>
+              )}
 
-            {/* Product grid */}
-            {filtered.length === 0 ? (
-              <div className="text-center py-24">
-                <p className="text-5xl mb-4">🔍</p>
-                <h3 className="font-display text-2xl font-bold text-text-primary mb-2">No products found</h3>
-                <p className="text-text-muted mb-6">Try adjusting your filters or search terms</p>
-                <button onClick={resetFilters}
-                  className="px-6 py-2.5 bg-primary-600 text-white rounded-full text-sm font-medium hover:bg-primary-700 transition-colors cursor-pointer">
-                  Reset Filters
-                </button>
-              </div>
-            ) : (
-              <div className={cn(
-                viewMode === 'grid'
-                  ? 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6'
-                  : 'flex flex-col gap-4'
-              )}>
-                {filtered.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            )}
-          </main>
-        </div>
-      </div>
-
-      {/* Mobile sidebar overlay */}
-      {sidebarOpen && (
-        <>
-          <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
-          <div className="fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-card-bg shadow-warm-lg p-5 overflow-y-auto animate-slide-in-left">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-semibold text-text-primary">Filters</h2>
-              <button onClick={() => setSidebarOpen(false)} className="text-text-muted hover:text-text-primary cursor-pointer"><X size={20} /></button>
-            </div>
-            <FilterPanel
-              categories={categories} toggleCategory={toggleCategory}
-              priceRange={priceRange} setPriceRange={setPriceRange}
-              dietary={dietary} toggleDietary={toggleDietary}
-              minRating={minRating} setMinRating={setMinRating}
-              inStockOnly={inStockOnly} setInStockOnly={setInStockOnly}
-              resetFilters={resetFilters} filterCount={filterCount}
-            />
+              {/* Product grid */}
+              {filtered.length === 0 ? (
+                <div className="text-center py-24">
+                  <p className="text-5xl mb-4">🔍</p>
+                  <h3 className="font-display text-2xl font-bold text-text-primary mb-2">No products found</h3>
+                  <p className="text-text-muted mb-6">Try adjusting your filters or search terms</p>
+                  <button onClick={resetFilters}
+                    className="px-6 py-2.5 bg-primary-600 text-white rounded-full text-sm font-medium hover:bg-primary-700 transition-colors cursor-pointer">
+                    Reset Filters
+                  </button>
+                </div>
+              ) : (
+                <div className={cn(
+                  viewMode === 'grid'
+                    ? 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6'
+                    : 'flex flex-col gap-4'
+                )}>
+                  {filtered.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+              )}
+            </main>
           </div>
-        </>
-      )}
-    </div>
+        </div>
+
+        {/* Mobile sidebar overlay */}
+        {sidebarOpen && (
+          <>
+            <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
+            <div className="fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-card-bg shadow-warm-lg p-5 overflow-y-auto animate-slide-in-left">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-semibold text-text-primary">Filters</h2>
+                <button onClick={() => setSidebarOpen(false)} className="text-text-muted hover:text-text-primary cursor-pointer"><X size={20} /></button>
+              </div>
+              <FilterPanel
+                categories={categories} toggleCategory={toggleCategory}
+                priceRange={priceRange} setPriceRange={setPriceRange}
+                dietary={dietary} toggleDietary={toggleDietary}
+                minRating={minRating} setMinRating={setMinRating}
+                inStockOnly={inStockOnly} setInStockOnly={setInStockOnly}
+                resetFilters={resetFilters} filterCount={filterCount}
+              />
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 
