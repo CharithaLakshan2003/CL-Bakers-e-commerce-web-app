@@ -30,12 +30,12 @@ export function MobileMenu({ navLinks }: MobileMenuProps) {
       />
       <div className="fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-card-bg border-r border-border shadow-warm-lg animate-slide-in-left">
         <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-          <span className="font-display font-bold text-xl text-text-primary">
+          <span className="font-display font-bold text-xl text-yellow-600 dark:text-white">
             CL <span className="text-primary-600">Bakers</span>
           </span>
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-text-muted text-yellow-600 hover:text-text-primary hover:bg-primary-50 dark:text-white dark:hover:bg-primary-900/30 transition-colors cursor-pointer"
           >
             <X size={18} />
           </button>
@@ -47,7 +47,7 @@ export function MobileMenu({ navLinks }: MobileMenuProps) {
               key={link.href}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center px-4 py-3 rounded-xl text-text-secondary hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 font-medium transition-colors"
+              className="flex items-center px-4 py-3 rounded-xl text-yellow-600 hover:text-primary-600 hover:bg-primary-50 dark:text-white dark:hover:bg-primary-600/30 font-medium transition-colors"
             >
               {link.label}
             </Link>
@@ -61,8 +61,8 @@ export function MobileMenu({ navLinks }: MobileMenuProps) {
                 {user?.name?.[0]?.toUpperCase() ?? 'U'}
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-text-primary truncate">{user?.name}</p>
-                <p className="text-xs text-text-muted truncate">{user?.email}</p>
+                <p className="text-sm font-semibold text-yellow-600 dark:text-white truncate">{user?.name}</p>
+                <p className="text-xs text-text-muted text-yellow-600 dark:text-white truncate">{user?.email}</p>
               </div>
             </div>
           ) : (

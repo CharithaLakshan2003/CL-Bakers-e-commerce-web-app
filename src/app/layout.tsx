@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import './globals.css';
+import { SessionSync } from '@/components/SessionSync';
 
 const playfair = Playfair_Display({
   variable: '--font-display',
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${playfair.variable} ${inter.variable} min-h-screen flex flex-col`}>
+        <SessionSync />
         {children}
       </body>
     </html>

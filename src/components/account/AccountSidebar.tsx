@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useUserStore } from '@/stores/user.store';
 import { LayoutDashboard, ShoppingBag, User, Heart, MapPin, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { signOut } from 'next-auth/react';
 
 export function AccountSidebar() {
   const pathname = usePathname();
@@ -53,7 +54,8 @@ export function AccountSidebar() {
         })}
         <div className="h-px bg-border my-2 mx-4" />
         <button
-          onClick={() => {
+          onClick={async () => {
+            await signOut({ redirect: false });
             logout();
             window.location.href = '/auth/login';
           }}

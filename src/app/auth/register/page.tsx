@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,8 +13,7 @@ import { User, Mail, Lock, ArrowLeft } from 'lucide-react';
 import * as z from 'zod';
 
 import { registerUser } from '../actions';
-import { signIn } from 'next-auth/react';
-
+import { signIn, getSession } from 'next-auth/react';
 export default function RegisterPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,12 @@ export default function RegisterPage() {
         setError(signInResult.error);
         setLoading(false);
       } else {
+        const session = await getSession();
+        if (session?.user) {
+          useUserStore.getState().setUser(session.user as any);
+        }
         router.push('/account');
+        router.refresh();
       }
     } else {
       setError(result.error || 'Failed to register');
@@ -56,8 +61,8 @@ export default function RegisterPage() {
           <Link href="/" className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-primary-600 mb-6 transition-colors">
             <ArrowLeft size={16} /> Back to home
           </Link>
-          <div className="w-12 h-12 rounded-full bg-primary-600 flex items-center justify-center mx-auto mb-4">
-            <span className="text-white text-2xl leading-none">🥐</span>
+          <div className="relative w-20 h-20 rounded-full bg-primary-200 flex items-center justify-center mx-auto mb-4 overflow-hidden p-3">
+            <Image src="/logo1.png" alt="CL Bakers Logo" fill className="object-contain" priority/>
           </div>
           <h2 className="text-center font-display text-3xl font-bold text-text-primary">Create an account</h2>
           <p className="mt-2 text-center text-sm text-text-secondary">

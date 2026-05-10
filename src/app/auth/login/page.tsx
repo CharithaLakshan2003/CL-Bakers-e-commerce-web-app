@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,8 +12,7 @@ import { Input } from '@/components/ui/Input';
 import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import * as z from 'zod';
 
-import { signIn } from 'next-auth/react';
-
+import { signIn, getSession } from 'next-auth/react';
 export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,12 @@ export default function LoginPage() {
       setError('Invalid email or password.');
       setLoading(false);
     } else {
-      router.push('/account'); // Wait, we should redirect to the intended URL or based on role, but NextAuth can handle redirection. For now we will redirect to /account.
+      const session = await getSession();
+      if (session?.user) {
+        useUserStore.getState().setUser(session.user as any);
+      }
+      router.push('/account');
+      router.refresh();
     }
   };
 
@@ -47,8 +52,8 @@ export default function LoginPage() {
           <Link href="/" className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-primary-600 mb-6 transition-colors">
             <ArrowLeft size={16} /> Back to home
           </Link>
-          <div className="w-12 h-12 rounded-full bg-primary-600 flex items-center justify-center mx-auto mb-4">
-            <span className="text-white text-2xl leading-none">🥐</span>
+          <div className="relative w-20 h-20 rounded-full bg-primary-200 flex items-center justify-center mx-auto mb-4 overflow-hidden p-3">
+            <Image src="/logo1.png" alt="CL Bakers Logo" fill className="object-contain" priority/>
           </div>
           <h2 className="text-center font-display text-3xl font-bold text-text-primary">Welcome back</h2>
           <p className="mt-2 text-center text-sm text-text-secondary">
@@ -99,16 +104,13 @@ export default function LoginPage() {
 
         <div className="mt-6">
           <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border" />
-            </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-2 bg-card-bg text-text-muted">Or continue with</span>
             </div>
           </div>
           
           <div className="mt-6">
-            <Button fullWidth variant="outline" className="text-text-primary border-border" onClick={() => signIn('google')} type="button">
+            <Button fullWidth variant="outline" className="text-text-primary border-border" onClick={() => signIn('google', { callbackUrl: '/account' })} type="button">
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />

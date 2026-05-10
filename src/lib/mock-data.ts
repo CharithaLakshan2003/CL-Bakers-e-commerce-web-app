@@ -202,7 +202,7 @@ export const categories = [
   { id: 'bread', label: 'Artisan Bread', image: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=400&q=80', count: 3 },
   { id: 'pastry', label: 'Pastries', image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400&q=80', count: 3 },
   { id: 'cake', label: 'Cakes', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&q=80', count: 2 },
-  { id: 'savory', label: 'Savory', image: 'https://images.unsplash.com/photo-1568901342437-2498d8ce82a2?w=400&q=80', count: 2 },
+  { id: 'savory', label: 'Savory', image: 'https://plus.unsplash.com/premium_photo-1733317300123-5a3827566e8f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHNhdm9yeSUyMGl0ZW1zfGVufDB8fDB8fHww', count: 2 },
   { id: 'gluten-free', label: 'Gluten-Free', image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=400&q=80', count: 2 },
 ];
 

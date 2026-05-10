@@ -10,6 +10,7 @@ import { useUserStore } from '@/stores/user.store';
 import { cn } from '@/lib/utils';
 import { MobileMenu } from './MobileMenu';
 import { SearchOverlay } from './SearchOverlay';
+import { signOut } from 'next-auth/react';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -73,7 +74,7 @@ export function Header() {
                     'px-4 py-2 rounded-full text-sm font-medium transition-all',
                     pathname === link.href
                       ? 'bg-primary-600 text-white'
-                      : 'text-text-secondary hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30'
+                      : 'text-text-secondary text-yellow-600 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30'
                   )}
                 >
                   {link.label}
@@ -86,7 +87,7 @@ export function Header() {
               {/* Search */}
               <button
                 onClick={() => setSearchOpen(true)}
-                className="w-9 h-9 rounded-full flex items-center justify-center text-text-muted hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors cursor-pointer"
+                className="w-9 h-9 rounded-full flex items-center justify-center text-text-muted text-yellow-600 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors cursor-pointer"
                 aria-label="Search"
               >
                 <Search size={18} />
@@ -95,7 +96,7 @@ export function Header() {
               {/* Dark mode */}
               <button
                 onClick={toggleDark}
-                className="w-9 h-9 rounded-full flex items-center justify-center text-text-muted hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors cursor-pointer"
+                className="w-9 h-9 rounded-full flex items-center justify-center text-text-muted text-yellow-600 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors cursor-pointer"
                 aria-label={isDark ? 'Light mode' : 'Dark mode'}
               >
                 {isDark ? <Sun size={18} /> : <Moon size={18} />}
@@ -104,7 +105,7 @@ export function Header() {
               {/* Wishlist */}
               <Link
                 href="/account/wishlist"
-                className="hidden sm:flex w-9 h-9 rounded-full items-center justify-center text-text-muted hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors"
+                className="hidden sm:flex w-9 h-9 rounded-full items-center justify-center text-text-muted text-yellow-600 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors"
                 aria-label="Wishlist"
               >
                 <Heart size={18} />
@@ -115,14 +116,14 @@ export function Header() {
                 href="/cart"
                 className={cn(
                   'relative w-9 h-9 rounded-full flex items-center justify-center',
-                  'text-text-muted hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors',
+                  'text-text-muted text-yellow-600 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors',
                   cartAnimating && 'animate-wiggle'
                 )}
                 aria-label={`Cart (${itemCount} items)`}
               >
                 <ShoppingCart size={18} />
                 {itemCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 bg-primary-600 text-white text-xs rounded-full flex items-center justify-center font-bold leading-none">
+                  <span className="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 text-yellow-600 bg-primary-600 text-white text-xs rounded-full flex items-center justify-center font-bold leading-none">
                     {itemCount > 9 ? '9+' : itemCount}
                   </span>
                 )}
@@ -161,7 +162,12 @@ export function Header() {
                           </Link>
                         ))}
                         <button
-                          onClick={() => { logout(); setUserMenuOpen(false); }}
+                          onClick={async () => { 
+                            await signOut({ redirect: false });
+                            logout(); 
+                            setUserMenuOpen(false); 
+                            window.location.href = '/';
+                          }}
                           className="w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors cursor-pointer"
                         >
                           <LogOut size={15} />
@@ -182,7 +188,7 @@ export function Header() {
               {/* Hamburger */}
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="md:hidden w-9 h-9 rounded-full flex items-center justify-center text-text-muted hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors cursor-pointer"
+                className="md:hidden w-9 h-9 rounded-full flex items-center justify-center text-text-muted text-yellow-600 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors cursor-pointer"
                 aria-label="Open menu"
               >
                 <Menu size={20} />
