@@ -48,7 +48,7 @@ export function TodaysSpecials() {
               <span className="inline-block px-3 py-1 bg-honey text-primary-900 text-xs font-bold rounded-full mb-4">
                 TODAY&apos;S SPECIAL
               </span>
-              <h3 className="font-display text-3xl sm:text-4xl font-bold mb-3">{special.name}</h3>
+              <h3 className="font-display text-3xl sm:text-4xl font-bold mb-3 !text-yellow-600 dark:!text-white">{special.name}</h3>
               <p className="text-white/70 text-sm max-w-md mb-6 line-clamp-2">{special.description}</p>
               <div className="flex items-center gap-4 flex-wrap">
                 <span className="font-display text-3xl font-bold text-honey">{formatPrice(special.price)}</span>

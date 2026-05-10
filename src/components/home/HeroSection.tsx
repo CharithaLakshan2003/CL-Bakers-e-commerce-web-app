@@ -24,9 +24,10 @@ export function HeroSection() {
         </div>
 
         {/* Headline */}
-        <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl light:text-white dark:text-white font-bold leading-tight mb-6 animate-fade-in-up [animation-delay:100ms]">
-          Freshly Baked<br />
-          <span className="text-honey italic">Daily</span> with Love
+        <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight mb-6 animate-fade-in-up [animation-delay:100ms]">
+          <span className="text-yellow-500 dark:text-white">Freshly Baked</span><br />
+          <span className="text-yellow-200 italic">Daily</span>
+          <span className="text-yellow-500 dark:text-white"> with Love</span>
         </h1>
 
         <p className="text-lg sm:text-xl text-white/75 max-w-xl mx-auto mb-10 animate-fade-in-up [animation-delay:200ms]">

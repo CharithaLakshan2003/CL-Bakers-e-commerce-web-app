@@ -66,15 +66,15 @@ export function Footer() {
               Artisan baked goods made fresh every morning with locally sourced ingredients and old-world techniques.
             </p>
             <div className="space-y-2 text-sm text-cream-200/70">
-              <p className="flex items-start gap-2"><MapPin size={14} className="mt-0.5 shrink-0 text-honey" />42 Main Street, Downtown, City 10001</p>
-              <p className="flex items-center gap-2"><Phone size={14} className="shrink-0 text-honey" />+1 (555) 234-5678</p>
-              <p className="flex items-center gap-2"><Mail size={14} className="shrink-0 text-honey" />hello@clbakers.com</p>
+              <p className="flex items-start gap-2"><MapPin size={14} className="mt-0.5 shrink-0 text-honey" />42 Main Street, Downtown, Colombo 07</p>
+              <p className="flex items-center gap-2"><Phone size={14} className="shrink-0 text-honey" />+94 76 854 0745</p>
+              <p className="flex items-center gap-2"><Mail size={14} className="shrink-0 text-honey" />clbakers@gmail.com</p>
             </div>
           </div>
 
           {/* Col 2 – Quick Links */}
           <div>
-            <h3 className="text-cream-100 font-semibold mb-4 text-sm uppercase tracking-wider">Quick Links</h3>
+            <h3 className="text-cream-100 font-semibold mb-4 text-sm uppercase tracking-wider !text-yellow-500 dark:!text-white">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map(link => (
                 <li key={link.href}>
@@ -88,7 +88,7 @@ export function Footer() {
 
           {/* Col 3 – Hours */}
           <div>
-            <h3 className="text-cream-100 font-semibold mb-4 text-sm uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-cream-100 font-semibold mb-4 text-sm uppercase tracking-wider flex items-center gap-2 !text-yellow-500 dark:!text-white">
               <Clock size={14} className="text-honey" /> Opening Hours
             </h3>
             <div className="space-y-2">
@@ -101,7 +101,7 @@ export function Footer() {
             </div>
             {/* Social */}
             <div className="mt-6">
-              <h3 className="text-cream-100 font-semibold mb-3 text-sm uppercase tracking-wider">Follow Us</h3>
+              <h3 className="text-cream-100 font-semibold mb-3 text-sm uppercase tracking-wider !text-yellow-500 dark:!text-white">Follow Us</h3>
               <div className="flex gap-2">
                 {[
                   { icon: Instagram, href: '#', label: 'Instagram' },
@@ -120,16 +120,16 @@ export function Footer() {
 
           {/* Col 4 – Newsletter */}
           <div>
-            <h3 className="text-cream-100 font-semibold mb-2 text-sm uppercase tracking-wider">Newsletter</h3>
+            <h3 className="text-cream-100 font-semibold mb-2 text-sm uppercase tracking-wider !text-yellow-500 dark:!text-white">Newsletter</h3>
             <p className="text-sm text-cream-200/70 mb-4">Get weekly specials, recipes, and early access to new products.</p>
             <form
-              onSubmit={(e) => { e.preventDefault(); alert('Thanks for subscribing! 🥐'); }}
+              onSubmit={(e) => { e.preventDefault(); alert('Thanks for subscribing!'); }}
               className="flex flex-col gap-2"
             >
               <input
                 type="email"
                 required
-                placeholder="your@email.com"
+                placeholder="your@gmail.com"
                 className="w-full px-4 py-2.5 rounded-xl bg-primary-800 border border-primary-700 text-cream-100 placeholder:text-cream-200/40 text-sm focus:outline-none focus:border-honey transition-colors"
               />
               <button

@@ -19,7 +19,7 @@ export function Testimonials() {
       <div className="container-custom relative">
         <div className="text-center mb-12">
           <p className="text-honey font-medium text-sm uppercase tracking-wider mb-2">What Our Customers Say</p>
-          <h2 className="font-display text-4xl font-bold">Loved by Thousands</h2>
+          <h2 className="font-display text-4xl font-bold !text-yellow-700 dark:!text-white">Loved by Thousands</h2>
         </div>
 
         {/* Desktop: show all 3 */}

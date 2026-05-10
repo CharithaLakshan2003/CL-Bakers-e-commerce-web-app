@@ -49,8 +49,8 @@ export const mockProducts: Product[] = [
     description: 'Pillowy-soft brioche rolls swirled with Ceylon cinnamon and brown sugar, crowned with a thick cream cheese frosting that melts right into the warm dough.',
     price: 5.50, comparePrice: undefined, stock: 18, category: 'pastry',
     images: [
-      'https://images.unsplash.com/photo-1612836987731-5537e1aabcca?w=800&q=80',
-      'https://images.unsplash.com/photo-1603532648955-039310d9ed75?w=800&q=80',
+      'https://tse1.explicit.bing.net/th/id/OIP.ZTKZyPJ2rZwysiF1M5I_pwHaLG?rs=1&pid=ImgDetMain&o=7&rm=3',
+      'https://tse1.explicit.bing.net/th/id/OIP.ZTKZyPJ2rZwysiF1M5I_pwHaLG?rs=1&pid=ImgDetMain&o=7&rm=3',
     ],
     allergens: ['gluten', 'dairy', 'eggs'],
     nutritionalInfo: { calories: 390, protein: '7g', carbs: '58g', fat: '15g', fiber: '1.5g', sugar: '28g', sodium: '310mg' },
@@ -89,7 +89,7 @@ export const mockProducts: Product[] = [
     description: 'A classic French quiche with a buttery shortcrust pastry, filled with wilted baby spinach, crumbled Greek feta, caramelized onions and free-range eggs.',
     price: 14.00, comparePrice: undefined, stock: 8, category: 'savory',
     images: [
-      'https://images.unsplash.com/photo-1568901342437-2498d8ce82a2?w=800&q=80',
+      'https://images.unsplash.com/photo-1679116136154-1b621f97b31e?q=80&w=740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     ],
     allergens: ['gluten', 'dairy', 'eggs'],
     nutritionalInfo: { calories: 320, protein: '12g', carbs: '22g', fat: '20g', fiber: '1g', sugar: '3g', sodium: '520mg' },

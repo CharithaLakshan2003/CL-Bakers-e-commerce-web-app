@@ -59,7 +59,7 @@ export function Header() {
                   priority
                 />
               </div>
-              <span className="font-display font-bold text-xl text-text-primary tracking-tight">
+              <span className="font-display font-bold text-xl !text-yellow-600 dark:!text-white tracking-tight">
                 CL <span className="text-primary-600">Bakers</span>
               </span>
             </Link>
