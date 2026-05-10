@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Mock middleware to protect routes
   // In a real app, NextAuth middleware would be used
   const { pathname } = request.nextUrl;
